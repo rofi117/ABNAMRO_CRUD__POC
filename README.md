@@ -40,15 +40,7 @@ This project demonstrates basic CRUD operations using Spring Boot, including cre
   - Simple Frontend is also designed to interact with backend.
   - OR Use Postman, or your swagger web browser to interact with the endpoints.
 
-## Setup
 
-1. download the project
-2. Navigate to the project directory
-     - cd your-project
-4. Build the project using Maven
-      - mvn clean install
-5. Run the project
-      - java -jar target/your-project.jar
 
 
 
