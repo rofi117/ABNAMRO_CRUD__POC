@@ -26,7 +26,8 @@ public class BeneficiaryController {
 
     @PostMapping("/addbeneficiary")
     public ResponseEntity<Beneficiary> addBeneficiary(@RequestBody Beneficiary beneficiary) {
-         if (!service.isValidBankAccNumber(beneficiary.getBeneficiaryAccNo()))
+        boolean isValidBankAccNumber = service.isValidBankAccNumber(beneficiary.getBeneficiaryAccNo());
+         if (!isValidBankAccNumber)
            throw new AccountNumberNotValidException("Entered Account number is not valid");
         else {
             Beneficiary newbeneficiary = service.save(beneficiary);
@@ -57,8 +58,8 @@ public class BeneficiaryController {
                throw new BeneficiaryNotFoundException("Beneficiary id = " + id + " is not exist");
             }
         else{
-              service.deleteBeneficiaryByID(id);
-              return new ResponseEntity<>("Beneficiary id = " + id + " is successfully deleted", HttpStatus.OK);
+            String result = service.deleteBeneficiaryByID(id);
+              return new ResponseEntity<>(result, HttpStatus.OK);
           }
 
     }
