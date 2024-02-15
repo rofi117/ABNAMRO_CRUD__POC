@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ABN AMRO POC</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="container p-4 mt-5">
+    <div class="row">
+        <div class="col-xl-6 mainarea text-center">
+            <button onclick="displayCreate();hideAllErrorMsg()" class="btn btn-secondary my-3 rounded-pill col-7 btn-lg" id="btn" type="button">Create</button>
+            <button onclick="displayUpdate()" class="btn btn-secondary my-3 rounded-pill col-7  btn-lg" id="btn" type="button" >Update</button>
+            <button onclick="displayDeleteAll()" class="btn btn-secondary my-3 rounded-pill col-7 btn-lg " id="btn" type="button" >Delete All</button>
+            <button onclick="displayDeleteById()" class="btn btn-secondary my-3 rounded-pill col-7 btn-lg" id="btn" type="button" >Delete By ID</button>
+            <button onclick="getbeneficiaryList();hideAll()" class="btn btn-secondary my-3 rounded-pill col-7 btn-lg" id="btn" type="button" >Get All</button>
+            <button onclick="displayGetById()" class="btn btn-secondary my-3 rounded-pill col-7 btn-lg" id="btn" type="button" >Get By ID</button>
+        </div>
+
+        <div class ="col-xl-2">
+        </div>
+
+
+        <div class="col-xl-3" id="create" >
+
+            <form>
+                <p class="h5 text-center">Create Beneficiary</p>
+                <label for="createbname">Beneficiary Name:</label>
+                <input type="text" class="form-control" placeholder="Beneficiary Name" id="createbname" name="beneficiaryName">
+                <label for="createbccno"> Account Number:</label>
+                <input type="text" class="form-control" placeholder="Beneficiary Account Number" id="createbccno" name="beneficiaryAccNo">
+                <label for="createbank"> Beneficiary Bank:</label>
+                <input type="text" class="form-control" placeholder="Beneficiary Bank" id="createbank" name="beneficiaryBank">
+                <label for="createifsc"> Beneficiary IFSC:</label>
+                <input type="text" class="form-control" placeholder="Beneficiary IFSC" id="createifsc" name="beneficiaryIFSC">
+                <div class=" text-center">
+                    <button onclick="create()" id="btn" class="btn btn-secondary m-5 rounded-pill btn-lg button" type="button" >Submit</button>
+                </div>
+                <h5 class="text-center text-success" id="validaccnum" style="display:none"></h5>
+                <h5 class="text-center text-danger" id="notvalidaccnum" style="display:none"></h5>
+               
+            </form>
+
+        </div>
+
+        <div class="col-xl-3" id="update">
+
+            <form id="updateByIdForm">
+                <p class="h5 text-center">Update Beneficiary</p>
+                <label for="updatebid">ID:</label>
+                <input type="text" class="form-control" id="updatebid" placeholder="ID" name="updatebyid">
+                <label for="updatebname">Beneficiary Name:</label>
+                <input type="text" class="form-control" id="updatebname" placeholder="Beneficiary Name" name="Beneficiary_Name">
+                <label for="updatebccno"> Account Number:</label>
+                <input type="text" class="form-control" id="updatebccno" placeholder="Beneficiary Account Number" name="beneficiaryAccNo">
+                <label for="updatebank"> Beneficiary Bank:</label>
+                <input type="text" class="form-control" id="updatebank" placeholder="Beneficiary Bank" name="beneficiaryBank">
+                <label for="updateifsc"> Beneficiary IFSC:</label>
+                <input type="text" class="form-control" id="updateifsc" placeholder="Beneficiary IFSC" name="beneficiaryIFSC">
+                <div class=" text-center">
+                    <button onclick="updateBeneficiary()" id="btn" class="btn btn-secondary m-5 rounded-pill btn-lg" type="button" >Update</button>
+                </div>
+                <h2 class="text-danger" id="notexistmessage" style="display:none"></h2>
+            </form>
+
+        </div>
+
+
+        <div class="col-xl-3" id="deleteall">
+
+            <form>
+                <p class="h5 text-center">Sure you want to delete All Beneficiary?</p>
+                <div class=" text-center">
+                    <button onclick="deleteAll()" id="deleteallbutton" class="btn btn-secondary m-5 button rounded-pill btn-lg " type="button" >Delete All</button>
+                </div>
+                <div class=" text-center">
+                    <button onclick="hideAll()" id="btn" class="btn btn-secondary m-5 rounded-pill btn-lg" type="button" >Cancel</button>
+                </div>   
+                <h4 class ="text-success" id="deletemessage" style="display:none"></h4> 
+                <h4 class ="text-success" id="emptylistmessage" style="display:none"></h4>
+                
+                                            
+            </form>
+
+        </div>
+
+        <div class="col-xl-3" id="deletebyid">
+            <form id="deleteByIdForm">
+                <p class="h5 text-center">Delete by ID</p>
+                <label for="deleteid"> ID:</label>
+                <input type="text" class="form-control" placeholder="ID" name="deletid" id="deleteid">
+                <div class=" text-center">
+                    <button onclick="deleteBeneficiaryById()" id="btn" class="btn btn-secondary m-5 rounded-pill btn-lg" type="button" >Delete</button>
+                </div>
+                <h2 class="text-success" id="foundmessage"  style="display:none"></h2>
+                <h2 class="text-danger" id="notfoundmessage" style="display:none"></h2>
+            </form>
+
+        </div>
+
+        <div class="col-xl-3" id="getbyid">
+
+            <form id="fetchByIdForm">
+                <p class="h5 text-center">Fetch by ID</p>
+                <label for="getid">ID:</label>
+                <input type="text" class="form-control" placeholder="ID" name="id" id="getid" >
+
+                <div class=" text-center">
+                    <button id="btn" onclick="getBeneficiaryById()" class="btn btn-secondary m-5 rounded-pill btn-lg" type="button" >Get</button>
+                    <h2 class="text-success" id="foundidmessage"  style="display:none"></h2>
+                    <h2 class="text-danger" id="notfoundidmessage" style="display:none"></h2>
+                </div>
+            </form>
+        </div>
+  </div>
+
+    <div>
+        <h2 class="text-center mt-5">Beneficiary List</h2>
+        <table class="table table-info table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Beneficiary_Name</th>
+                <th>Beneficiary_AccountNumber</th>
+                <th>Beneficiary_Bank</th>
+                <th>Beneficiary_IFSC</th>
+            </tr>
+            </thead>
+            <tbody id="tbData">
+                        
+            </tbody>
+
+        </table>
+    </div>
+
+
+
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
