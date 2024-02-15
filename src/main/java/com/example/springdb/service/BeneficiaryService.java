@@ -31,27 +31,24 @@ public class BeneficiaryService {
         return "All Beneficiary Records Deleted Successfully";
     }
 
-    public boolean deleteBeneficiaryByID(Integer id) {
+    public String deleteBeneficiaryByID(Integer id) {
         repo.deleteById(id);
-        return true;
+        return "Beneficiary id = " + id + " is successfully deleted";
     }
 
     public boolean checkBeneficiaryExistById(Integer id) {
-        if (repo.existsById(id))
-            return true;
-        else
-            return false;
+        return repo.existsById(id);
     }
 
-    public Optional<Beneficiary> updateBeneficiaryById(Beneficiary beneficiary, Integer id) {
+    public Optional<Beneficiary> updateBeneficiaryById(Beneficiary updatedBeneficiary, Integer id) {
 
-        Optional<Beneficiary> optionalBeneficiary = repo.findById(id);
-        if (optionalBeneficiary.isPresent()) {
-            Beneficiary existingBeneficiary = optionalBeneficiary.get();
-            existingBeneficiary.setBeneficiaryName(beneficiary.getBeneficiaryName());
-            existingBeneficiary.setBeneficiaryAccNo(beneficiary.getBeneficiaryAccNo());
-            existingBeneficiary.setBeneficiaryBank(beneficiary.getBeneficiaryBank());
-            existingBeneficiary.setBeneficiaryIFSC(beneficiary.getBeneficiaryIFSC());
+        Optional<Beneficiary> beneficiary = repo.findById(id);
+        if (beneficiary.isPresent()) {
+            Beneficiary existingBeneficiary = beneficiary.get();
+            existingBeneficiary.setBeneficiaryName(updatedBeneficiary.getBeneficiaryName());
+            existingBeneficiary.setBeneficiaryAccNo(updatedBeneficiary.getBeneficiaryAccNo());
+            existingBeneficiary.setBeneficiaryBank(updatedBeneficiary.getBeneficiaryBank());
+            existingBeneficiary.setBeneficiaryIFSC(updatedBeneficiary.getBeneficiaryIFSC());
 
             return Optional.of(repo.save(existingBeneficiary));
         } else {
@@ -68,9 +65,7 @@ public class BeneficiaryService {
             return false;
         }
         Matcher m=p.matcher(bankAccNo);
-        if(m.matches())
-            return true;
-        return false;
+        return m.matches();
     }
 
     public Optional<Beneficiary> findBeneficiaryById(Integer id) {
